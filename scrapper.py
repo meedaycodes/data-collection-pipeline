@@ -19,6 +19,7 @@ class Scraper:
         self.driver_service = Service("drivers\geckodriver.exe")
         self.driver_options = Options()
         self.driver_options.binary_location=r"C:\Program Files\Mozilla Firefox\firefox.exe"
+        self.driver_options.headless = True
         self.driver = webdriver.Firefox(service=self.driver_service, options=self.driver_options)
         web_page =self.driver.get(settings.URL)
         
@@ -183,7 +184,3 @@ if __name__ == "__main__":
     data.get_other_pages()
     store_data_as_json(stock_info)
     store_data_as_csv(stock_info)
-
-
-
-

@@ -4698,3 +4698,24 @@ JavaScript error: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e
 JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
 JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
 1667399722561	Marionette	INFO	Stopped listening on port 55432
+1667401249513	geckodriver	INFO	Listening on 127.0.0.1:55975
+1667401252560	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-headless" "--remote-debugging-port" "55976" "--remote-allow-hosts" "localhost" "-no-remote" "-profile" "C:\\Users\\habee\\AppData\\Local\\Temp\\rust_mozprofile63DDMK"
+*** You are running in headless mode.
+1667401253393	Marionette	INFO	Marionette enabled
+1667401253405	Marionette	INFO	Listening on port 55986
+Read port: 55986
+WebDriver BiDi listening on ws://127.0.0.1:55976
+1667401253594	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+[GFX1-]: RenderCompositorSWGL failed mapping default framebuffer, no dt
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\habee\\AppData\\Local\\Temp\\rust_mozprofile63DDMK\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://127.0.0.1:55976/devtools/browser/9094ea01-2c75-4665-8fa3-b0ad43037724
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 8: Error: Failed to load script //www.googleadservices.com/pagead/conversion_async.js
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 8: Error: Failed to load script //www.googleadservices.com/pagead/conversion_async.js
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript error: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 8: Error: Failed to load script //www.googleadservices.com/pagead/conversion_async.js
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+JavaScript warning: https://assets.adobedtm.com/9c230ad0b94d/a9a98aee1653/launch-e689a81c7007.min.js, line 2: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
