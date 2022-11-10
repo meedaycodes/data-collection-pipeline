@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.firefox.options import Options
 from storedata import store_data_as_csv, store_data_as_json
+from webdriver_manager.firefox import GeckoDriverManager
 import settings
 
 stock_info = {"stock_code":[], "comp_name":[],"current_price":[],
@@ -18,10 +19,12 @@ class Scraper:
     def __init__(self):
         self.driver_service = Service("drivers\geckodriver.exe")
         self.driver_options = Options()
-        self.driver_options.binary_location=r"C:\Program Files\Mozilla Firefox\firefox.exe"
+        #self.driver_options.binary_location=r"C:\Program Files\Mozilla Firefox\firefox.exe"
         self.driver_options.headless = True
-        self.driver = webdriver.Firefox(service=self.driver_service, options=self.driver_options)
+        self.driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=self.driver_options)
+        #self.driver = webdriver.Firefox(service=self.driver_service, options=self.driver_options)
         web_page =self.driver.get(settings.URL)
+        print("installing firefox and geckodriver")
         
     def accept_cookies(self):
         '''
@@ -34,6 +37,7 @@ class Scraper:
         self.driver.implicitly_wait(2)
         cookies_path = self.driver.find_element(by= By.XPATH, value= settings.COOKIES_URL)
         cookies_path.click()
+        print("cookies button clicked")
 
     def get_ftse250_table(self):
         '''
@@ -48,6 +52,7 @@ class Scraper:
         market_path = self.driver.find_element(by=By.XPATH, value=settings.MARKET_PATH)
         ftse_250_path = self.driver.find_element(by=By.XPATH, value=settings.FTSE250_TABLE_PATH).click()
         table_path= self.driver.find_elements(by=By.XPATH, value=settings.TABLE_ROW_PATH)
+        print("Table row found")
 
     def get_stock_epic(self):
         '''
@@ -63,6 +68,7 @@ class Scraper:
         for info in epic[4:-4]:
             info=info.text
             stock_info["stock_code"].append(info)
+        print("stock epic path found")
 
     def get_comp_name(self):
         '''
@@ -72,12 +78,15 @@ class Scraper:
         
         Returns: Gets each company's name and appends it to the "comp_name" of stock_info dictionary
         '''
+        stock_info["comp_name"]= []
         self.driver.implicitly_wait(5)
         stock_data = self.driver.find_elements(by=By.XPATH, value=settings.STOCK_DATA_PATH)
         comp_name = self.driver.find_elements(by=By.XPATH, value=settings.COMPANY_NAME_PATH)
         for name in comp_name[2:-2]:
             name=name.text
             stock_info["comp_name"].append(name)
+        print("Getting names of company")
+        return stock_info["comp_name"]
 
     def get_current_price(self):
         '''
@@ -87,12 +96,15 @@ class Scraper:
         
         Returns: Gets each company's stock price appends it to the "current_price" list of stock_info dictionary
         '''
+        stock_info["current_price"]
         self.driver.implicitly_wait(5)
         stock_data = self.driver.find_elements(by=By.XPATH, value=settings.STOCK_DATA_PATH)
         curr_price = self.driver.find_elements(by=By.XPATH, value= settings.CURRENT_PRICE_PATH)
         for price in curr_price[2:-2]:
             price=price.text
             stock_info["current_price"].append(price)
+        print("Getting companies stock price")
+        return stock_info["current_price"]
 
     def get_unit_change_in_price(self):
         '''
@@ -102,12 +114,15 @@ class Scraper:
         
         Returns: Gets each stock unit price change and appends it to the "unit_day_change" of stock_info dictionary
         '''
+        stock_info["unit_day_change"]=[]
         self.driver.implicitly_wait(5)
         stock_data = self.driver.find_elements(by=By.XPATH, value=settings.STOCK_DATA_PATH)
         unit_change = self.driver.find_elements(by=By.XPATH, value=settings.UNIT_CHANGE_PATH)
         for change in unit_change:
             change=change.text
             stock_info["unit_day_change"].append(change)
+        print("Getting unit price change")
+        return stock_info["unit_day_change"]
 
     def get_pct_change_in_price(self):
         '''
@@ -117,12 +132,15 @@ class Scraper:
         Returns: Gets each price change as a percentage and appends it to "pct_day_change" list of stock_info dictionary
         
         '''
+        stock_info["pct_day_change"]=[]
         self.driver.implicitly_wait(5)
         stock_data = self.driver.find_elements(by=By.XPATH, value=settings.STOCK_DATA_PATH)
         pct_change = self.driver.find_elements(by=By.XPATH, value= settings.PCT_CHANGE_PATH)
         for pct in pct_change:
             pct=pct.text
             stock_info["pct_day_change"].append(pct)
+        print("get pct change in price")
+        return stock_info["pct_day_change"]
 
     def page_crawler(self):
         '''
@@ -137,6 +155,7 @@ class Scraper:
         for page in settings.PAGES_TO_CRAWL:
             page = self.driver.get(page)
             pages_link.append(page)
+        print("crawling pages")
         return pages_link
 
     def get_cookies(self):
@@ -176,11 +195,15 @@ class Scraper:
             table_path_2 = self.driver.find_elements(by=By.XPATH, value=settings.TABLE_ROW_PATH)
             self.get_page_data()
 
+    def run_scrapper(self):
+        data.get_cookies()
+        data.get_page_data()
+        data.get_other_pages()
+
+
 data = Scraper()
 
 if __name__ == "__main__":
-    data.get_cookies()
-    data.get_page_data()
-    data.get_other_pages()
+    data.run_scrapper()
     store_data_as_json(stock_info)
     store_data_as_csv(stock_info)
