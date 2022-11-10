@@ -37,5 +37,47 @@ def page_crawler(self):
 - file storedata.py was imported into the class file and called under the if __name__ is "__main__" condition. The result of calling the
 functions within storedata.py is the creation of a csv and json file stored in the scrapped data directory
 
+### Testing the Scraper
+- Using the unittest module in the scrapper_test.py file i tested four public methods of the scrapper class, one of such methods is provided below which tests that the accept_cookies button is found through the url provided by settings.COOKIES_URL
+```@patch('selenium.webdriver.remote.webdriver.WebDriver.find_element')
+    def test_accept_cookies(self,
+        mock_find_element:Mock):
+        self.obj_scraper.accept_cookies()
+        mock_find_element.assert_called_once_with(by='xpath', value= settings.COOKIES_URL)
+```
+### Containerising Using Docker
+- following the test i created a docker file to produce a docker image that was thereafter pushed to the docker hub. The image was produced with the following steps
+```
+FROM python:3.9
+
+
+# Update the system and install firefox
+RUN apt-get update 
+RUN apt -y upgrade 
+RUN apt-get install -y firefox-esr
+
+# get the latest release version of firefox 
+RUN latest_release=$(curl -sS https://api.github.com/repos/mozilla/geckodriver/releases/latest \
+    | grep tag_name | sed -E 's/.*"([^"]+)".*/\1/') && \
+    # Download the latest release of geckodriver
+    wget https://github.com/mozilla/geckodriver/releases/download/$latest_release/geckodriver-$latest_release-linux32.tar.gz \
+    # extract the geckodriver
+    && tar -xvzf geckodriver* \
+    # add executable permissions to the driver
+    && chmod +x geckodriver \
+    # Move gecko driver in the system path
+    && mv geckodriver /usr/local/bin
+
+COPY . . 
+
+RUN pip install --upgrade pip
+
+# install dependencies
+RUN pip install -r requirements.txt
+
+CMD ["python", "scrapper.py"]
+```
+### CI/CD Pipeline for the Docker Image
+- I set up the relevant GitHub secrets (on GitHub) that contains the credentials required to push to the Dockerhub account. I then created a GitHub action (workflow) to build the docker image and push it to Dockerhub account everytime a Git push action takes place (trigggered on a "push" to the "main" branch of the repository).
 
 ## Thank You!!
